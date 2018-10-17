@@ -1,0 +1,131 @@
+﻿@model RoyalBank.Models.usp_view_account_by_accountid_Result
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Deposit</title>
+</head>
+
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+
+    <div>
+        <h3 style="text-align:center;color:purple">DEPOSIT PANEL</h3>
+        <b style="margin-left:1000px"> You have logged in at @Session["SessionID"]</b>
+        <hr />
+        <div class="form-horizontal" style="border:thick solid purple ; width:940px;height:auto;margin-left:200px;margin-top:50px;padding-top:50px;">
+            <div class="form-group" style="width:500px;margin-left:200px">
+                @Html.Label("Account Id", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.AccountId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width:173px" } })
+
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px">
+                @Html.Label("Customer Id", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width:173px" } })
+
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px">
+                @Html.Label("Account Type", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.AccountType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width:173px" } })
+
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px">
+                @Html.Label("Account Status", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width:173px" } })
+
+                </div>
+            </div>
+
+
+            <div class="form-group" style="width:500px;margin-left:200px">
+                @Html.Label("Current Balance", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", style = "width:173px" } })
+
+                </div>
+            </div>
+
+
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group,form-control" style="width:500px;margin-left:200px">
+                    @Html.Label("Deposit Amount", htmlAttributes: new { @class = "control-label col-md-4 required", })
+                    <div class="col-md-5 " style="width:300px">
+                        @Html.TextBox("amt")
+                    </div>
+                </div>
+                @Html.HiddenFor(model => model.AccountId)
+                @Html.HiddenFor(model => model.Amount)
+
+                <br />
+                <br />
+                <div class="form-group" style="width:500px;margin-left:380px;">
+                    <input type="submit" style="width:80px" value=" Deposit" class="btn btn-success" />&nbsp;&nbsp;&nbsp;
+                    <button type="button" onclick="location.href='@Url.Action("ViewAll", "Cashier")'" class="btn btn-warning" style="width:80px">Back</button>
+                </div>
+                <div style="color:red;margin-left:730px">
+                    Astrick(*) fields are mandatory
+                </div>
+            }
+
+
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#dialog").dialog(
+                {
+                    close: function (event, ui) { window.location.href = "/Cashier/ViewAll"; }
+                });
+        });
+    </script>
+
+    @if (TempData["notice"] != null)
+    {
+        <text>
+
+            <div id="dialog" title=" Message">
+                <img src="https://cdn4.iconfinder.com/data/icons/color-webshop/512/medical_insurance-512.png" style="margin-left:80px; width:100px;height:100px">
+                <p style="text-align:center; color:red">@TempData["notice"]</p>
+            </div>
+        </text>
+    }
+</body>
+</html>

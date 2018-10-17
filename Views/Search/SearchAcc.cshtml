@@ -1,0 +1,71 @@
+﻿@model RoyalBank.Models.account_details
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Search Account</title>
+</head>
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <p style="margin-left:1100px"> <b>Logged in at @Session["SessionID"]</b></p>
+            <hr />
+            <h3 style="text-align:center;color:purple">Search Account</h3>
+            <hr />
+            <div class="form-horizontal" style="border:thick solid purple ; width:940px;height:auto;margin-left:200px;margin-top:50px;padding-top:50px;">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group" style="width:500px;margin-left:200px">
+                    @Html.Label("Account Id", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                    <div class="col-md-2" style="width:300px">
+                        @Html.EditorFor(model => model.AccountId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group" style="width:500px;margin-left:500px;font-family:Aharoni">
+                    OR
+                </div>
+
+                <div class="form-group" style="width:500px;margin-left:200px">
+
+                    @Html.Label("Customer Id", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                    <div class="col-md-2" style="width:300px">
+                        @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group" style="width:500px;margin-left:285px;">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Search" class="btn btn-success" style="width:117px" />
+                        <button type="button" onclick="location.href='@Url.Action("ViewAll", "Cashier")'" class="btn btn-warning" style="width:132px; margin-left:15px">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div*@>
+</body>
+
+</html>

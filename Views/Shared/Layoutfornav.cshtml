@@ -1,0 +1,347 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Royal Bank Services</title>
+    <style>
+        .body {
+            background-image: url("https://ak2.picdn.net/shutterstock/videos/1852300/thumb/1.jpg");
+            opacity: 0.5;
+        }
+
+        .carousel-indicators li {
+            display: inline-block;
+            width: 48px;
+            height: 48px;
+            margin: 10px;
+            text-indent: 0;
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+            background-color: #0000ff;
+            box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.5);
+        }
+
+        .carousel-indicators .active {
+            width: 48px;
+            height: 48px;
+            margin: 10px;
+            background-color: #ffff99;
+        }
+
+        /* Add a black background color to the top navigation */
+        .topnav {
+            background-color: #333;
+            overflow: hidden;
+            width: 1268px;
+            margin: auto;
+        }
+
+            /* Style the links inside the navigation bar */
+            .topnav a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                /* Change the color of links on hover */
+                .topnav a:hover {
+                    background-color: forestgreen;
+                    color: black;
+                }
+
+            /* Hide the link that should open and close the topnav on small screens */
+            .topnav .icon {
+                display: none;
+            }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: grey;
+            color: white;
+            text-align: center;
+            width: 1268px;
+            margin: auto;
+        }
+
+        .nav-tabs li a {
+            color: #777;
+        }
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #08e249;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color:#3e8e41 ;
+        }
+    </style>
+
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+
+</head>
+<body>
+    <!--Navigation Bar-->
+    <div class="topnav" id="myTopnav">
+        <a href="Home">Home</a>
+        <a href="AboutUs">About Us</a>
+        <a href="FAQ">FAQ</a>
+        <a href="ContactUs">Contact Us</a>
+
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn">Cashier Management</button>
+        <div class="dropdown-content">
+            <a href="/BankCustomer/AddCustomer">Add customer</a>
+            <a href="/BankCustomer/CustomerList">Customer list</a>
+            <a href="/BankCustomer/CustomerList">Delete customer</a>
+            <a href="/BankCustomer/CustomerList">Edit customer</a>
+
+        </div>
+    </div>
+
+
+
+    
+
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width:1268px; height:250px; margin:auto; border:3px solid green; padding:4px">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="http://www.financenewspro.com/wp-content/uploads/2017/01/private-banking.jpg" alt="Slider1" style="width:1268px; height:250px">
+                <div class="carousel-caption">
+                    <h3>Banking from Anywhere & Anytime</h3>
+                </div>
+            </div>
+            <div class="item">
+                <img src="https://www.dfcugroup.com/wp-content/uploads/2014/04/web-banners-CS5-051.gif" alt="Slider2" style="width:1268px; height:250px; align-content:center">
+                <div class="carousel-caption">
+                    <h3>Corporate Banking Aspects</h3>
+                </div>
+            </div>
+            <div class="item">
+                <img src="http://www.banklg.com/images/banner2.jpg" alt="Slider3" style="width:1268px; height:250px; align-content:center">
+                <div class="carousel-caption">
+                    <h3>Mutual Funds and Investment on a Click</h3>
+                </div>
+            </div>
+            <div class="item">
+                <img src="http://www.standardbank.co.za/site/2011/credit_card/protection_plan/images/ccpp_banner.jpg" alt="Slider4" style="width:1268px; height:250px; align-content:center">
+                <div class="carousel-caption">
+                    <h3>Secure Transactions and Payments</h3>
+                </div>
+            </div>
+            <div class="item">
+                <img src="http://www.rupeezone.in/images/banner/01.jpg" alt="Slider5" style="width:1268px; height:250px; align-content:center">
+                <div class="carousel-caption">
+                    <h3>Fill your dreams by Zero Interest Loans</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    @RenderBody()
+
+    <!--Image Gallery-->
+    <div class="container-fluid text-center bg-grey" style="width:1268px;margin:auto">
+        <h2 class="text-center" style="color:darkslateblue">Portfolio</h2>
+        <h4 font-style:italic>What we have created</h4>
+        <div class="row text-center">
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src="http://edc-vc.com/wp-content/uploads/Fotolia_79779083_Subscription_Monthly_M-472x314-custom.jpg" alt="Paris" style="height:250px">
+                    <p><strong>Paris</strong></p>
+                    <p>Yes, we built Paris</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src="http://www.blazent.com/wp-content/uploads/bigstock-123718601.jpg" alt="New York" style=" height:250px">
+                    <p><strong>New York</strong></p>
+                    <p>We built New York</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src="http://www.morisey-dart.com/content/images/banking-and-finance-industry.jpg" alt="San Francisco" style="height:250px">
+                    <p><strong>San Francisco</strong></p>
+                    <p>Yes, San Fran is ours</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section>
+        <!--Services-->
+        <div class="container-fluid text-center">
+            <h2 style="color:darkslateblue">Our Services</h2>
+            <h4 style="font:italic">"What we offer to our valuable customers"</h4>
+            <br>
+            <div class="row">
+                <div class="col-lg-4">
+                    <span class="glyphicon glyphicon-piggy-bank"></span>
+                    <h4>Savings</h4>
+                    <p>Save for future</p>
+                </div>
+                <div class="col-lg-4">
+                    <span class="glyphicon glyphicon-phone"></span>
+                    <h4>Internet Banking</h4>
+                    <p>Just a click and its done!</p>
+                </div>
+                <div class="col-lg-4">
+                    <span class="glyphicon glyphicon-credit-card"></span>
+                    <h4>Credit Card</h4>
+                    <p>Shop till you drop </p>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-lg-4">
+                    <span class="glyphicon glyphicon-home"></span>
+                    <h4>Home Loans</h4>
+                    <p>Getting your dream house isn't a dream anymore!</p>
+                </div>
+                <div class="col-lg-4">
+                    <span class="glyphicon glyphicon-gift"></span>
+                    <h4>Gifts & Benefits </h4>
+                    <p>Yes! We value our customers.</p>
+                </div>
+                <div class="col-lg-4">
+                    <span class="glyphicon glyphicon-education"></span>
+                    <h4>Personal Loans</h4>
+                    <p>Make your life easy..</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Carousal-->
+    <section>
+        <h4 style="font-style:italic">What our customers have to say :</h4>
+        <div class="container-fluid text-center">
+            <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox" style="padding-bottom:100px">
+                    <div class="item active">
+                        <h4>"This  bank is the best. I am so happy with the services!"<br><span style="font-style:italic;">Michael Joe</span></h4>
+                    </div>
+                    <div class="item">
+                        <h4>"One word... WOW!!"<br><span style="font-style:italic;">John Doe, Salesman</span></h4>
+                    </div>
+                    <div class="item">
+                        <h4>"Could I be any more happy with this bank ?"<br><span style="font-style:italic;">Chandler Bing, Actor</span></h4>
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    @*<div class="container-fluid">
+            <p>
+                <br/>
+            </p>
+        </div>*@
+
+
+    <section>
+
+        <div class="footer" style="margin:auto; width:100%;padding-top:5px">
+            <p>&copy; Copyright to Royal Bank Services</p>
+        </div>
+    </section>
+</body>
+</html>

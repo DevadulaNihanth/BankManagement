@@ -1,0 +1,190 @@
+﻿@model IEnumerable<RoyalBank.Models.usp_view_account_Result>
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+
+
+<!-- jQuery library -->
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+
+<!-- Latest compiled JavaScript -->
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
+
+<script src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#customerDetails").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+
+    });
+
+</script>
+<style>
+    .tr, th {
+        background-color: darkkhaki;
+        text-align: center;
+    }
+</style>
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    <p style="margin-left:1100px"> <b>Logged in at @Session["SessionID"]</b></p>
+
+    <hr />
+    <h3 style="color:purple;text-align:center">Accounts List</h3>
+
+    <hr />
+
+    <div style="margin-left:200px;margin-right:200px;margin-bottom:50px">
+        <table class="table table-bordered" id="customerDetails" style="border:groove; border-color:#fbdb29;">
+
+            <tr>
+                <th width="50px" style="background-color:#f8d00e">
+                    Serial
+                </th>
+                <th width="80px" style="background-color:#f8d00e">
+                    @Html.DisplayName("Account ID")
+                </th>
+                <th width="90px" style="background-color:#f8d00e">
+                    @Html.DisplayName("Customer ID")
+                </th>
+                <th width="100px" style="background-color:#f8d00e">
+                    @Html.DisplayName("Account Type")
+                </th>
+                <th width="50px" style="background-color:#f8d00e">
+                    @Html.DisplayName("Status")
+                </th>
+                <th width="60px" style="background-color:#f8d00e">
+                    @Html.DisplayName("Balance")
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Message)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastUpdated)
+                    </th>*@
+                <th style="background-color:#f8d00e">
+                    Operations
+                    @*</th>
+                        <th >
+                            Withdraw*@
+                </th>
+
+            </tr>
+            @{int i = 1;}
+
+            @foreach (var item in Model)
+            {
+                if (item.Status == "Active")
+                {
+                    <tr bgcolor="#f1efef">
+                        <td style="text-align:center;">
+                            <span>@(i++)</span>
+
+                        </td>
+
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountType)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        @*<td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.Message)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.LastUpdated)
+                            </td>*@
+
+                        <td style="text-align:center">
+                            @if (item.Status != "Inactive")
+                            {
+
+                                <button type="button" onclick="location.href='@Url.Action("Deposit", "Cashier", new { id=item.AccountId})'" class="btn btn-primary btn-xs" style="height:25px">Deposit<i class="glyphicon glyphicon-deposit"></i></button>
+                                <button type="button" onclick="location.href='@Url.Action("Withdraw", "Cashier", new { id = item.AccountId })'" class="btn btn-primary btn-xs" style="height:25px">Withdraw<i class="glyphicon glyphicon-deposit"></i></button>
+
+                                @*@Html.ActionLink("Deposit |", "Deposit", new { id = item.AccountId , @class = "btn btn-primary" })*@
+                                @*</td>
+
+                                    <td style="text-align:center">*@
+                                @*@Html.ActionLink(" Withdraw", "Withdraw", new { id = item.AccountId })*@
+                            }
+                        </td>
+
+
+                    </tr>
+                }
+
+                else
+                {
+                    <tr bgcolor="#f5cece">
+                        <td style="text-align:center;background-color:#f5cece">
+                            <span>@(i++)</span>
+
+                        </td>
+
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountType)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        @*<td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.Message)
+                            </td>
+                            <td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.LastUpdated)
+                            </td>*@
+
+                        <td style="text-align:center">
+                            @if (item.Status != "Inactive")
+                            {
+
+                                <button type="button" onclick="location.href='@Url.Action("Deposit", "Cashier", new { id=item.AccountId})'" class="btn btn-primary">Deposit<i class="glyphicon glyphicon-deposit"></i></button>
+                                <button type="button" onclick="location.href='@Url.Action(" Withdraw", "Withdraw", new { id = item.AccountId })'" class="btn btn-primary">Withdraw<i class="glyphicon glyphicon-deposit"></i></button>
+
+                                @*@Html.ActionLink("Deposit |", "Deposit", new { id = item.AccountId , @class = "btn btn-primary" })*@
+                                @*</td>
+
+                                    <td style="text-align:center">*@
+                                @*@Html.ActionLink(" Withdraw", "Withdraw", new { id = item.AccountId })*@
+                            }
+                        </td>
+
+
+                    </tr>
+                }
+
+
+
+
+
+
+
+            }
+
+        </table>
+    </div>
+</body>

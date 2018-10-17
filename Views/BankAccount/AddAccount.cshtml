@@ -1,0 +1,218 @@
+﻿@model RoyalBank.Models.account_details
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_AccountExecutive.cshtml";
+}
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<style>
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #08e249;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
+<style type="text/css">
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        var maxChars = $("#sessionNum");
+        var max_length = maxChars.attr('maxlength');
+        if (max_length > 0) {
+            maxChars.bind('keyup', function (e) {
+                length = new Number(maxChars.val().length);
+                counter = max_length - length;
+                $("#sessionNum_counter").text(counter);
+            });
+        }
+    });
+</script>
+@*<a href="@Url.Action("Logout", "Login")" class="btn btn-info btn-lg" style="color:orange;background-color:white;margin-left:1195px;margin-top:10px">
+
+    <span class="glyphicon glyphicon-log-out"></span> Log out
+</a>*@
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        if (Convert.ToInt32(Session["role_id"]) == 1)
+        {
+            <text>
+                @*<h2>Login Successful!!!</h2>
+                    <br />*@
+                @*<b>Welcome @Session["UserName"].ToString()</b>*@
+                <b style="margin-left:1000px"> You have logged in at @Session["SessionID"]</b>
+            </text>
+        }
+
+
+        <hr />
+        <h3 style="color:purple;text-align:center">Open account Panel</h3>
+        <hr />
+
+        <div class="form-horizontal" style="border: medium solid purple;width:940px;height:auto;margin-left:200px;margin-top:50px;padding-top:50px;">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-10" style="width:300px">
+                    @*@Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <input type="text" id="sessionNum" maxlength="6" name="CustomerId" min="1" style="width:270px" pattern="[0-9]">
+                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.Balance, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Balance, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            @{
+        List<SelectListItem> listItems = new List<SelectListItem>();
+        listItems.Add(new SelectListItem
+             {
+                 Text = "Savings",
+                 Value = "Savings"
+             });
+        listItems.Add(new SelectListItem
+             {
+                 Text = "Current",
+                 Value = "Current",
+
+             });
+
+            }
+
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.AccountType, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-5">
+                    @Html.DropDownListFor(model => model.AccountType, listItems, "---Select Type--", new { @class = "btn btn-default dropdown-toggle", style = "width: 270px;" })
+                    @Html.ValidationMessageFor(model => model.AccountType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.LastUpdated, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LastUpdated, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LastUpdated, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group" style="width:500px;margin-left:285px;">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Open Account" class="btn btn-success" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" onclick="location.href='@Url.Action("AccountList", "BankAccount")'" class="btn btn-warning" style="width:132px">Back</button>
+                </div>
+            </div>
+
+            <div style="color:red;margin-left:730px">
+                Astrick(*) fields are mandatory
+            </div>
+        </div>
+    }
+
+
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#dialog").dialog(
+                {
+                    close: function (event, ui) { window.location.href = "/BankAccount/AccountList"; }
+                });
+        });
+    </script>
+
+    @if (TempData["notice"] != null)
+    {
+        <text>
+
+            <div id="dialog" title=" Message">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk5M9tnXcNtldX6HH9z1M6Ud_D7jqmQTROkTToNoMjiM26KMXjsQ" style="margin-left:80px; width:100px;height:100px">
+                <p style="text-align:center; color:red">@TempData["notice"]</p>
+            </div>
+        </text>
+    }
+
+    </body>

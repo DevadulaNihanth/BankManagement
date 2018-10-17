@@ -1,0 +1,236 @@
+﻿@model IEnumerable<RoyalBank.Models.usp_view_account_Result>
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_AccountExecutive.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+
+<!-- jQuery library -->
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+
+<!-- Latest compiled JavaScript -->
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
+
+<script src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#accountDetails").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+
+    });
+
+</script>
+<style>
+    .tr, th {
+        background-color:#ff7215;
+        text-align: center;
+    }
+    
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #08e249;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color:#3e8e41 ;
+        }
+
+    
+</style>
+
+@*<a href="@Url.Action("Logout", "Login")" class="btn btn-info btn-lg" style="color:orange;background-color:white;margin-left:1195px;margin-top:10px">
+
+    <span class="glyphicon glyphicon-log-out"></span> Log out
+</a>*@
+
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    @if (Convert.ToInt32(Session["role_id"]) == 1)
+    {
+        <text>
+            @*<h2>Login Successful!!!</h2>*@
+            <br />
+            @*<b>Welcome @Session["UserName"].ToString()</b>*@
+            <p style="margin-left:1100px"> <b>logged in at @Session["SessionID"]</b></p>
+        </text>
+        @*<nav>
+            <div class="dropdown">
+                @*<button class="dropbtn">Account Executive</button>
+                    <div class="dropdown-content">*@
+        @*<button class="dropbtn">Customer Management</button>
+                <div class="dropdown-content">
+
+                    <a href="/BankCustomer/AddCustomer">Add Customer </a>
+
+                    <a href="/BankCustomer/CustomerList">Customer List</a>
+                    <a href="/BankCustomer/DeleteCustomer">Delete Customer</a>
+                    <a href="/BankCustomer/EditCustomer">Edit Customer</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                @*<div class="dropdown-content">*@
+        @* <button class="dropbtn">Account Management</button>
+                    <div class="dropdown-content">
+                        <a href="/BankAccount/AddAccount">Add Account</a>
+
+                        <a href="/BankAccount/AccountList">Account List</a>
+                        <a href="/BankAccount/Delete">Delete Account</a>
+                    </div>
+                </div>
+
+            </nav>*@     }
+
+
+
+    <hr />
+    <h2 style="text-align:center;color:purple">Account List</h2>
+    <hr />
+
+    <div style="margin-left:80px;margin-right:80px;margin-bottom:50px">
+        <table class="table table-bordered" id="accountDetails" style=;border:groove; border-color:#fbdb29">
+            <tr bgcolor="#f1efef">
+                <th style="background-color:#f8d00e">
+                    Serial
+                </th>
+                <th style="background-color:#f8d00e">
+                    @Html.DisplayName("Account ID")
+                </th>
+                <th style="background-color:#f8d00e">
+                    @Html.DisplayName("Customer ID")
+                </th>
+                <th style="background-color:#f8d00e">
+                    @Html.DisplayName("Account Type")
+                </th>
+                <th style="background-color:#f8d00e">
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th style="background-color:#f8d00e">
+                    @Html.DisplayNameFor(model => model.Balance)
+                </th>
+                @*<th style="background-color:#f8d00e">
+                    @Html.DisplayNameFor(model => model.Message)
+                </th>*@
+                <th style="background-color:#f8d00e">
+                    @Html.DisplayName("Last Updated")
+                </th>
+
+            </tr>
+            @{int i = 1;}
+            @foreach (var item in Model)
+            {
+                if (item.Status == "Active")
+                {
+                    <tr bgcolor="#f1efef">
+
+                        <td style="text-align:center">
+                            <span>@(i++)</span>
+
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountType)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        @*<td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>*@
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.LastUpdated)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>*@
+                    </tr>
+                }
+                else
+                {
+                    <tr bgcolor="#f5cece">
+
+                        <td style="text-align:center">
+                            <span>@(i++)</span>
+
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.AccountType)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Balance)
+                        </td>
+                        @*<td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>*@
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.LastUpdated)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            </td>*@
+                    </tr>
+                }
+            }
+
+
+        </table>
+
+    </div>
+</body>

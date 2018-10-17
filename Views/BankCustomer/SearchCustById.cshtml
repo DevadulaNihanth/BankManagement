@@ -1,0 +1,100 @@
+﻿@model IEnumerable<RoyalBank.Models.usp_view_by_customerid_Result>
+
+@{
+    ViewBag.Title = "SearchCustById";
+    Layout = "~/Views/Shared/_AccountExecutive.cshtml";
+}
+
+<h2>SearchCustById</h2>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @using (Html.BeginForm("SearchCustById", "BankCustomer"))
+    {
+        <span>Enter Customer ID:</span> @Html.TextBox("CustomerId")
+        <input type="submit" value="Search" />
+        <br />
+        <br />
+        <table class="table table-bordered table-striped" id="customerDetails" style="border:groove; border-color:darkkhaki">
+            <tr>
+                <th>
+                    Serial
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SSNID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.State)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+            </tr>
+            @{int i = 1;}
+            @foreach (var item in Model)
+    {
+                <tr>
+                    <td style="text-align:center">
+                        <span>@(i++)</span>
+
+                    </td>
+
+
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.CustomerId)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.SSNID)
+                    </td>
+                    <td style="text-align:left">
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.DOB)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address2)
+                    </td>
+                    <td style="text-align:right">
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td style="text-align:right">
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                </tr>
+            </table>
+
+            }
+        </body>
+    </html>

@@ -1,0 +1,109 @@
+﻿@model RoyalBank.Models.statdetails
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+    }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Transaction Details</title>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '2013:2017',
+                maxDate: new Date()
+            }
+                );
+        });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker2').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '2013:2017',
+            maxDate: new Date()
+        }
+            );
+    });
+    </script>
+
+</head>
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+    <p style="margin-left:1100px"> <b>logged in at @Session["SessionID"]</b></p>
+        <div class="form-horizontal">
+            <hr />
+            <h3 style="color:purple;text-align:center">Enter Details</h3>
+            <hr />
+
+            <div class="form-horizontal" style="border:thick solid purple ; width:940px;height:auto;margin-left:200px;margin-top:50px;padding-top:50px;">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group" style="width:500px;margin-left:200px">
+                    @Html.Label("Account Id", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                    <div class="col-md-2" style="width:300px">
+                        @*@Html.EditorFor(model => model.AccountId, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <input type="text" id="sessionNum" maxlength="7" name="AccountId" min="1" style="width:270px" pattern="[0-9]">
+                        @Html.ValidationMessageFor(model => model.AccountId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" style="width:500px;margin-left:200px">
+                    @Html.Label("Start Date", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                    <div class="col-md-2" style="width:300px">
+                        @*@Html.EditorFor(model => model.startDate, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.TextBoxFor(model => model.startDate, new { @id = "datepicker", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" style="width:500px;margin-left:200px">
+                    @Html.Label("End Date", htmlAttributes: new { @class = "control-label col-md-4 required" })
+                    <div class="col-md-2" style="width:300px">
+                        @*@Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.TextBoxFor(model => model.endDate, new { @id = "datepicker2", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group" style="width:500px;margin-left:285px;">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Get Mini Statement" class="btn btn-success" />
+                        <button type="button" onclick="location.href='@Url.Action("ViewAll", "Cashier")'" class="btn btn-warning" style="width:108px; margin-left:15px">Back</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>

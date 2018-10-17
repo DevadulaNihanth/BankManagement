@@ -1,0 +1,996 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RoyalBankModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account_details">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="AccountType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Balance" Type="numeric" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="city_dropdown">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Name="city_id" Type="int" Nullable="false" />
+          <Property Name="city_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="state_id" Type="int" />
+        </EntityType>
+        <EntityType Name="customer_details">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SSNID" Type="bigint" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DOB" Type="nvarchar" MaxLength="20" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="200" />
+          <Property Name="City" Type="nvarchar" MaxLength="30" />
+          <Property Name="State" Type="nvarchar" MaxLength="30" />
+          <Property Name="Status" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="customer_log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="Message" Type="nvarchar" MaxLength="255" />
+          <Property Name="LastUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="destination_table">
+          <Key>
+            <PropertyRef Name="destination_id" />
+          </Key>
+          <Property Name="destination_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="destination_type" Type="nvarchar" MaxLength="50" />
+          <Property Name="source_id" Type="int" />
+        </EntityType>
+        <EntityType Name="login_master">
+          <Key>
+            <PropertyRef Name="login_id" />
+          </Key>
+          <Property Name="login_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+          <Property Name="role_id" Type="int" />
+        </EntityType>
+        <EntityType Name="role_master">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role_name" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="source_table">
+          <Key>
+            <PropertyRef Name="source_id" />
+          </Key>
+          <Property Name="source_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="source_type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="state_dropdown">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="int" Nullable="false" />
+          <Property Name="state_name" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="transaction_details">
+          <Key>
+            <PropertyRef Name="TxnId" />
+          </Key>
+          <Property Name="TxnId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountId" Type="bigint" />
+          <Property Name="Amount" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="TxnType" Type="nvarchar" MaxLength="15" />
+          <Property Name="DateAndTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="transactiondetails">
+          <Key>
+            <PropertyRef Name="TxnId" />
+          </Key>
+          <Property Name="TxnId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountId" Type="bigint" />
+          <Property Name="Amount" Type="numeric" Precision="15" Scale="2" />
+          <Property Name="TxnType" Type="nvarchar" MaxLength="15" />
+          <Property Name="DateAndTime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__city_drop__state__4D94879B">
+          <End Role="state_dropdown" Type="Self.state_dropdown" Multiplicity="0..1" />
+          <End Role="city_dropdown" Type="Self.city_dropdown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state_dropdown">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="city_dropdown">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__destinati__sourc__73BA3083">
+          <End Role="source_table" Type="Self.source_table" Multiplicity="0..1" />
+          <End Role="destination_table" Type="Self.destination_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="source_table">
+              <PropertyRef Name="source_id" />
+            </Principal>
+            <Dependent Role="destination_table">
+              <PropertyRef Name="source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cid">
+          <End Role="customer_details" Type="Self.customer_details" Multiplicity="0..1" />
+          <End Role="customer_log" Type="Self.customer_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer_details">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="customer_log">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_add_transaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="numeric" Mode="In" />
+          <Parameter Name="TxnType" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateAndTime" Type="datetime" Mode="In" />
+          <Parameter Name="TxnId" Type="bigint" Mode="InOut" />
+        </Function>
+        <Function Name="usp_addmoney_by_accountid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="int" Mode="In" />
+          <Parameter Name="balance" Type="numeric" Mode="In" />
+        </Function>
+        <Function Name="usp_city_dropdown" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_delete_account_by_accountid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="usp_delete_customerbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_destination_account" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_insert_account" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="bigint" Mode="In" />
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="AccountType" Type="nvarchar" Mode="In" />
+          <Parameter Name="Balance" Type="numeric" Mode="In" />
+          <Parameter Name="Id_Output" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_insert_transaction_details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="bigint" Mode="In" />
+          <Parameter Name="Amount" Type="numeric" Mode="In" />
+          <Parameter Name="Txntype" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_ministatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="bigint" Mode="In" />
+          <Parameter Name="startDate" Type="datetime" Mode="In" />
+          <Parameter Name="endDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_save_customer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="SSNID" Type="bigint" Mode="In" />
+          <Parameter Name="CustomerName" Type="nvarchar" Mode="In" />
+          <Parameter Name="DOB" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address2" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+          <Parameter Name="State" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status" Type="nvarchar" Mode="In" />
+          <Parameter Name="Id_Out" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="usp_save_customer_log" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="Message" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="usp_source_account" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_source_accounts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_source_accounts1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sourceID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_state_dropdown" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_view_account" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_view_account_by_accountid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="usp_view_account_by_customerid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_view_account_by_type_and_id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="AccountType" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="usp_view_by_customerid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_view_by_customerid_or_ssnid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="SSNID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="usp_view_by_ssnid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SSNID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="usp_view_customer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_view_customer_log" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_view_customer_log_byid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_viewAccount_by_customerid_or_Accountid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+          <Parameter Name="AccountId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="usp_withdrawmoney_by_accountid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountId" Type="int" Mode="In" />
+          <Parameter Name="balance" Type="numeric" Mode="In" />
+        </Function>
+        <EntityContainer Name="RoyalBankModelStoreContainer">
+          <EntitySet Name="account_details" EntityType="Self.account_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="city_dropdown" EntityType="Self.city_dropdown" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer_details" EntityType="Self.customer_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer_log" EntityType="Self.customer_log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="destination_table" EntityType="Self.destination_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="login_master" EntityType="Self.login_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role_master" EntityType="Self.role_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="source_table" EntityType="Self.source_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="state_dropdown" EntityType="Self.state_dropdown" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transaction_details" EntityType="Self.transaction_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transactiondetails" EntityType="Self.transactiondetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__city_drop__state__4D94879B" Association="Self.FK__city_drop__state__4D94879B">
+            <End Role="state_dropdown" EntitySet="state_dropdown" />
+            <End Role="city_dropdown" EntitySet="city_dropdown" />
+          </AssociationSet>
+          <AssociationSet Name="FK__destinati__sourc__73BA3083" Association="Self.FK__destinati__sourc__73BA3083">
+            <End Role="source_table" EntitySet="source_table" />
+            <End Role="destination_table" EntitySet="destination_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cid" Association="Self.FK_cid">
+            <End Role="customer_details" EntitySet="customer_details" />
+            <End Role="customer_log" EntitySet="customer_log" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RoyalBankModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="login_master">
+          <Key>
+            <PropertyRef Name="login_id" />
+          </Key>
+          <Property Name="login_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="role_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="role_master">
+          <Key>
+            <PropertyRef Name="role_id" />
+          </Key>
+          <Property Name="role_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="RoyalBankEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="login_master" EntityType="Self.login_master" />
+          <EntitySet Name="role_master" EntityType="Self.role_master" />
+          <EntitySet Name="account_details" EntityType="RoyalBankModel.account_details" />
+          <EntitySet Name="customer_details" EntityType="RoyalBankModel.customer_details" />
+          <EntitySet Name="customer_log" EntityType="RoyalBankModel.customer_log" />
+          <EntitySet Name="transaction_details" EntityType="RoyalBankModel.transaction_details" />
+          <EntitySet Name="transactiondetails" EntityType="RoyalBankModel.transactiondetails" />
+          <AssociationSet Name="FK_cid" Association="RoyalBankModel.FK_cid">
+            <End Role="customer_details" EntitySet="customer_details" />
+            <End Role="customer_log" EntitySet="customer_log" />
+          </AssociationSet>
+          <FunctionImport Name="usp_add_transaction">
+            <Parameter Name="AccountId" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+            <Parameter Name="TxnType" Mode="In" Type="String" />
+            <Parameter Name="DateAndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="TxnId" Mode="InOut" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="usp_addmoney_by_accountid">
+            <Parameter Name="AccountId" Mode="In" Type="Int32" />
+            <Parameter Name="balance" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="usp_delete_account_by_accountid">
+          <Parameter Name="AccountId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="usp_delete_customerbyid">
+          <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_insert_account">
+            <Parameter Name="AccountId" Mode="In" Type="Int64" />
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="AccountType" Mode="In" Type="String" />
+            <Parameter Name="Balance" Mode="In" Type="Decimal" />
+            <Parameter Name="Id_Output" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_save_customer">
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="SSNID" Mode="In" Type="Int64" />
+            <Parameter Name="CustomerName" Mode="In" Type="String" />
+            <Parameter Name="DOB" Mode="In" Type="String" />
+            <Parameter Name="Address1" Mode="In" Type="String" />
+            <Parameter Name="Address2" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Id_Out" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_save_customer_log">
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_view_account" ReturnType="Collection(RoyalBankModel.usp_view_account_Result)" />
+          <FunctionImport Name="usp_view_account_by_accountid" ReturnType="Collection(RoyalBankModel.usp_view_account_by_accountid_Result)">
+          <Parameter Name="AccountId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="usp_view_account_by_customerid" ReturnType="Collection(RoyalBankModel.usp_view_account_by_customerid_Result)">
+          <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_view_by_customerid" ReturnType="Collection(RoyalBankModel.usp_view_by_customerid_Result)">
+          <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_view_by_ssnid" ReturnType="Collection(RoyalBankModel.usp_view_by_ssnid_Result)">
+          <Parameter Name="SSNID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="usp_view_customer" ReturnType="Collection(RoyalBankModel.usp_view_customer_Result)" />
+          <FunctionImport Name="usp_view_customer_log" ReturnType="Collection(RoyalBankModel.usp_view_customer_log_Result)" />
+          <FunctionImport Name="usp_view_customer_log_byid" ReturnType="Collection(RoyalBankModel.usp_view_customer_log_byid_Result)">
+          <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_withdrawmoney_by_accountid">
+            <Parameter Name="AccountId" Mode="In" Type="Int32" />
+            <Parameter Name="balance" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <EntitySet Name="city_dropdown" EntityType="RoyalBankModel.city_dropdown" />
+          <EntitySet Name="state_dropdown" EntityType="RoyalBankModel.state_dropdown" />
+          <AssociationSet Name="FK__city_drop__state__4D94879B" Association="RoyalBankModel.FK__city_drop__state__4D94879B">
+            <End Role="state_dropdown" EntitySet="state_dropdown" />
+            <End Role="city_dropdown" EntitySet="city_dropdown" />
+          </AssociationSet>
+          <FunctionImport Name="usp_city_dropdown" ReturnType="Collection(RoyalBankModel.usp_city_dropdown_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_state_dropdown" ReturnType="Collection(RoyalBankModel.usp_state_dropdown_Result)" />
+          <FunctionImport Name="usp_view_by_customerid_or_ssnid" ReturnType="Collection(RoyalBankModel.usp_view_by_customerid_or_ssnid_Result)">
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="SSNID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="usp_viewAccount_by_customerid_or_Accountid" ReturnType="Collection(RoyalBankModel.usp_viewAccount_by_customerid_or_Accountid_Result)">
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="AccountId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ministatement" ReturnType="Collection(RoyalBankModel.usp_ministatement_Result)">
+            <Parameter Name="AccountId" Mode="In" Type="Int64" />
+            <Parameter Name="startDate" Mode="In" Type="DateTime" />
+            <Parameter Name="endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="usp_view_account_by_type_and_id" ReturnType="Collection(RoyalBankModel.usp_view_account_by_type_and_id_Result)">
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+            <Parameter Name="AccountType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_insert_transaction_details">
+            <Parameter Name="AccountId" Mode="In" Type="Int64" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+            <Parameter Name="Txntype" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_destination_account" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_source_account" ReturnType="Collection(String)">
+          </FunctionImport>
+          <EntitySet Name="destination_table" EntityType="RoyalBankModel.destination_table" />
+          <EntitySet Name="source_table" EntityType="RoyalBankModel.source_table" />
+          <AssociationSet Name="FK__destinati__sourc__73BA3083" Association="RoyalBankModel.FK__destinati__sourc__73BA3083">
+            <End Role="source_table" EntitySet="source_table" />
+            <End Role="destination_table" EntitySet="destination_table" />
+          </AssociationSet>
+          <FunctionImport Name="usp_source_accounts" ReturnType="Collection(RoyalBankModel.usp_source_accounts_Result)" />
+          <FunctionImport Name="usp_source_accounts1" ReturnType="Collection(RoyalBankModel.usp_source_accounts1_Result)">
+            <Parameter Name="sourceID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="account_details">
+          <Key>
+            <PropertyRef Name="AccountId" />
+          </Key>
+          <Property Name="AccountId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="AccountType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="15" Scale="2" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastUpdated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="customer_details">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SSNID" Type="Int64" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="customer_log" Relationship="RoyalBankModel.FK_cid" FromRole="customer_details" ToRole="customer_log" />
+        </EntityType>
+        <EntityType Name="customer_log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="customer_details" Relationship="RoyalBankModel.FK_cid" FromRole="customer_log" ToRole="customer_details" />
+        </EntityType>
+        <EntityType Name="transaction_details">
+          <Key>
+            <PropertyRef Name="TxnId" />
+          </Key>
+          <Property Name="TxnId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountId" Type="Int64" />
+          <Property Name="Amount" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="TxnType" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DateAndTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="transactiondetails">
+          <Key>
+            <PropertyRef Name="TxnId" />
+          </Key>
+          <Property Name="TxnId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountId" Type="Int64" />
+          <Property Name="Amount" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="TxnType" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DateAndTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_cid">
+          <End Type="RoyalBankModel.customer_details" Role="customer_details" Multiplicity="0..1" />
+          <End Type="RoyalBankModel.customer_log" Role="customer_log" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="usp_view_account_Result">
+          <Property Type="Int64" Name="AccountId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="String" Name="AccountType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Balance" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="String" Name="Message" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="usp_view_account_by_accountid_Result">
+          <Property Type="Int64" Name="AccountId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="String" Name="AccountType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Balance" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="String" Name="Message" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="usp_view_account_by_customerid_Result">
+          <Property Type="Int64" Name="AccountId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="String" Name="AccountType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Balance" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="String" Name="Message" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="usp_view_by_customerid_Result">
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="Int64" Name="SSNID" Nullable="true" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DOB" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Address1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Address2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="usp_view_by_ssnid_Result">
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="Int64" Name="SSNID" Nullable="true" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DOB" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Address1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Address2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="usp_view_customer_Result">
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="Int64" Name="SSNID" Nullable="true" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DOB" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Address1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Address2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="usp_view_customer_log_Result">
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="String" Name="Message" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="usp_view_customer_log_byid_Result">
+          <Property Type="Int32" Name="LogID" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="true" />
+          <Property Type="String" Name="Message" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="city_dropdown">
+          <Key>
+            <PropertyRef Name="city_id" />
+          </Key>
+          <Property Name="city_id" Type="Int32" Nullable="false" />
+          <Property Name="city_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="state_dropdown" Relationship="RoyalBankModel.FK__city_drop__state__4D94879B" FromRole="city_dropdown" ToRole="state_dropdown" />
+        </EntityType>
+        <EntityType Name="state_dropdown">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="Int32" Nullable="false" />
+          <Property Name="state_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="city_dropdown" Relationship="RoyalBankModel.FK__city_drop__state__4D94879B" FromRole="state_dropdown" ToRole="city_dropdown" />
+        </EntityType>
+        <Association Name="FK__city_drop__state__4D94879B">
+          <End Type="RoyalBankModel.state_dropdown" Role="state_dropdown" Multiplicity="0..1" />
+          <End Type="RoyalBankModel.city_dropdown" Role="city_dropdown" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="usp_city_dropdown_Result">
+          <Property Type="Int32" Name="city_id" Nullable="false" />
+          <Property Type="String" Name="city_name" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="state_id" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="usp_state_dropdown_Result">
+          <Property Type="Int32" Name="state_id" Nullable="false" />
+          <Property Type="String" Name="state_name" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="usp_view_by_customerid_or_ssnid_Result">
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="Int64" Name="SSNID" Nullable="true" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DOB" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Address1" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Address2" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="City" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="State" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="usp_viewAccount_by_customerid_or_Accountid_Result">
+          <Property Type="Int64" Name="AccountId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="AccountType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="usp_ministatement_Result">
+          <Property Type="Int64" Name="TxnId" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="String" Name="TxnType" Nullable="true" MaxLength="15" />
+          <Property Type="DateTime" Name="DateAndTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="usp_view_account_by_type_and_id_Result">
+          <Property Type="Int64" Name="AccountId" Nullable="false" />
+          <Property Type="Int32" Name="CustomerId" Nullable="false" />
+          <Property Type="String" Name="AccountType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="15" Scale="2" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="23" />
+        </ComplexType>
+        <EntityType Name="destination_table">
+          <Key>
+            <PropertyRef Name="destination_id" />
+          </Key>
+          <Property Name="destination_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="destination_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="source_table" Relationship="RoyalBankModel.FK__destinati__sourc__73BA3083" FromRole="destination_table" ToRole="source_table" />
+        </EntityType>
+        <EntityType Name="source_table">
+          <Key>
+            <PropertyRef Name="source_id" />
+          </Key>
+          <Property Name="source_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="source_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="destination_table" Relationship="RoyalBankModel.FK__destinati__sourc__73BA3083" FromRole="source_table" ToRole="destination_table" />
+        </EntityType>
+        <Association Name="FK__destinati__sourc__73BA3083">
+          <End Type="RoyalBankModel.source_table" Role="source_table" Multiplicity="0..1" />
+          <End Type="RoyalBankModel.destination_table" Role="destination_table" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="usp_source_accounts_Result">
+          <Property Type="Int32" Name="sourceID" Nullable="true" />
+          <Property Type="String" Name="sourceName" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="usp_source_accounts1_Result">
+          <Property Type="Int32" Name="sourceID" Nullable="true" />
+          <Property Type="String" Name="sourceName" Nullable="true" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RoyalBankModelStoreContainer" CdmEntityContainer="RoyalBankEntities">
+          <EntitySetMapping Name="login_master">
+            <EntityTypeMapping TypeName="RoyalBankModel.login_master">
+              <MappingFragment StoreEntitySet="login_master">
+                <ScalarProperty Name="login_id" ColumnName="login_id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role_master">
+            <EntityTypeMapping TypeName="RoyalBankModel.role_master">
+              <MappingFragment StoreEntitySet="role_master">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="account_details">
+            <EntityTypeMapping TypeName="RoyalBankModel.account_details">
+              <MappingFragment StoreEntitySet="account_details">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_details">
+            <EntityTypeMapping TypeName="RoyalBankModel.customer_details">
+              <MappingFragment StoreEntitySet="customer_details">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="SSNID" ColumnName="SSNID" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_log">
+            <EntityTypeMapping TypeName="RoyalBankModel.customer_log">
+              <MappingFragment StoreEntitySet="customer_log">
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transaction_details">
+            <EntityTypeMapping TypeName="RoyalBankModel.transaction_details">
+              <MappingFragment StoreEntitySet="transaction_details">
+                <ScalarProperty Name="DateAndTime" ColumnName="DateAndTime" />
+                <ScalarProperty Name="TxnType" ColumnName="TxnType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="TxnId" ColumnName="TxnId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transactiondetails">
+            <EntityTypeMapping TypeName="RoyalBankModel.transactiondetails">
+              <MappingFragment StoreEntitySet="transactiondetails">
+                <ScalarProperty Name="DateAndTime" ColumnName="DateAndTime" />
+                <ScalarProperty Name="TxnType" ColumnName="TxnType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="TxnId" ColumnName="TxnId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_cid" TypeName="RoyalBankModel.FK_cid" StoreEntitySet="customer_log">
+            <EndProperty Name="customer_log">
+              <ScalarProperty Name="LogID" ColumnName="LogID" />
+            </EndProperty>
+            <EndProperty Name="customer_details">
+              <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+            </EndProperty>
+            <Condition ColumnName="CustomerId" IsNull="false" />
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="usp_add_transaction" FunctionName="RoyalBankModel.Store.usp_add_transaction" />
+          <FunctionImportMapping FunctionImportName="usp_addmoney_by_accountid" FunctionName="RoyalBankModel.Store.usp_addmoney_by_accountid" />
+          <FunctionImportMapping FunctionImportName="usp_delete_account_by_accountid" FunctionName="RoyalBankModel.Store.usp_delete_account_by_accountid" />
+          <FunctionImportMapping FunctionImportName="usp_delete_customerbyid" FunctionName="RoyalBankModel.Store.usp_delete_customerbyid" />
+          <FunctionImportMapping FunctionImportName="usp_insert_account" FunctionName="RoyalBankModel.Store.usp_insert_account" />
+          <FunctionImportMapping FunctionImportName="usp_save_customer" FunctionName="RoyalBankModel.Store.usp_save_customer" />
+          <FunctionImportMapping FunctionImportName="usp_save_customer_log" FunctionName="RoyalBankModel.Store.usp_save_customer_log" />
+          <FunctionImportMapping FunctionImportName="usp_view_account" FunctionName="RoyalBankModel.Store.usp_view_account">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_account_Result">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_account_by_accountid" FunctionName="RoyalBankModel.Store.usp_view_account_by_accountid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_account_by_accountid_Result">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_account_by_customerid" FunctionName="RoyalBankModel.Store.usp_view_account_by_customerid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_account_by_customerid_Result">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_by_customerid" FunctionName="RoyalBankModel.Store.usp_view_by_customerid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_by_customerid_Result">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SSNID" ColumnName="SSNID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_by_ssnid" FunctionName="RoyalBankModel.Store.usp_view_by_ssnid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_by_ssnid_Result">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SSNID" ColumnName="SSNID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_customer" FunctionName="RoyalBankModel.Store.usp_view_customer">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_customer_Result">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SSNID" ColumnName="SSNID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_customer_log" FunctionName="RoyalBankModel.Store.usp_view_customer_log">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_customer_log_Result">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_customer_log_byid" FunctionName="RoyalBankModel.Store.usp_view_customer_log_byid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_customer_log_byid_Result">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_withdrawmoney_by_accountid" FunctionName="RoyalBankModel.Store.usp_withdrawmoney_by_accountid" />
+          <EntitySetMapping Name="city_dropdown">
+            <EntityTypeMapping TypeName="RoyalBankModel.city_dropdown">
+              <MappingFragment StoreEntitySet="city_dropdown">
+                <ScalarProperty Name="city_name" ColumnName="city_name" />
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="state_dropdown">
+            <EntityTypeMapping TypeName="RoyalBankModel.state_dropdown">
+              <MappingFragment StoreEntitySet="state_dropdown">
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK__city_drop__state__4D94879B" TypeName="RoyalBankModel.FK__city_drop__state__4D94879B" StoreEntitySet="city_dropdown">
+            <EndProperty Name="city_dropdown">
+              <ScalarProperty Name="city_id" ColumnName="city_id" />
+            </EndProperty>
+            <EndProperty Name="state_dropdown">
+              <ScalarProperty Name="state_id" ColumnName="state_id" />
+            </EndProperty>
+            <Condition ColumnName="state_id" IsNull="false" />
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="usp_city_dropdown" FunctionName="RoyalBankModel.Store.usp_city_dropdown">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_city_dropdown_Result">
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="city_name" ColumnName="city_name" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_state_dropdown" FunctionName="RoyalBankModel.Store.usp_state_dropdown">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_state_dropdown_Result">
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_by_customerid_or_ssnid" FunctionName="RoyalBankModel.Store.usp_view_by_customerid_or_ssnid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_by_customerid_or_ssnid_Result">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SSNID" ColumnName="SSNID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_viewAccount_by_customerid_or_Accountid" FunctionName="RoyalBankModel.Store.usp_viewAccount_by_customerid_or_Accountid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_viewAccount_by_customerid_or_Accountid_Result">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_ministatement" FunctionName="RoyalBankModel.Store.usp_ministatement">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_ministatement_Result">
+                <ScalarProperty Name="TxnId" ColumnName="TxnId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TxnType" ColumnName="TxnType" />
+                <ScalarProperty Name="DateAndTime" ColumnName="DateAndTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_view_account_by_type_and_id" FunctionName="RoyalBankModel.Store.usp_view_account_by_type_and_id">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_view_account_by_type_and_id_Result">
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_insert_transaction_details" FunctionName="RoyalBankModel.Store.usp_insert_transaction_details" />
+          <FunctionImportMapping FunctionImportName="usp_destination_account" FunctionName="RoyalBankModel.Store.usp_destination_account" />
+          <FunctionImportMapping FunctionImportName="usp_source_account" FunctionName="RoyalBankModel.Store.usp_source_account" />
+          <EntitySetMapping Name="destination_table">
+            <EntityTypeMapping TypeName="RoyalBankModel.destination_table">
+              <MappingFragment StoreEntitySet="destination_table">
+                <ScalarProperty Name="destination_type" ColumnName="destination_type" />
+                <ScalarProperty Name="destination_id" ColumnName="destination_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="source_table">
+            <EntityTypeMapping TypeName="RoyalBankModel.source_table">
+              <MappingFragment StoreEntitySet="source_table">
+                <ScalarProperty Name="source_type" ColumnName="source_type" />
+                <ScalarProperty Name="source_id" ColumnName="source_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK__destinati__sourc__73BA3083" TypeName="RoyalBankModel.FK__destinati__sourc__73BA3083" StoreEntitySet="destination_table">
+            <EndProperty Name="destination_table">
+              <ScalarProperty Name="destination_id" ColumnName="destination_id" />
+            </EndProperty>
+            <EndProperty Name="source_table">
+              <ScalarProperty Name="source_id" ColumnName="source_id" />
+            </EndProperty>
+            <Condition ColumnName="source_id" IsNull="false" />
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="usp_source_accounts" FunctionName="RoyalBankModel.Store.usp_source_accounts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_source_accounts_Result">
+                <ScalarProperty Name="sourceID" ColumnName="sourceID" />
+                <ScalarProperty Name="sourceName" ColumnName="sourceName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_source_accounts1" FunctionName="RoyalBankModel.Store.usp_source_accounts1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RoyalBankModel.usp_source_accounts1_Result">
+                <ScalarProperty Name="sourceID" ColumnName="sourceID" />
+                <ScalarProperty Name="sourceName" ColumnName="sourceName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

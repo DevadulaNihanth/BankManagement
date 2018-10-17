@@ -1,0 +1,136 @@
+﻿@model IEnumerable<RoyalBank.Models.usp_ministatement_Result>
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
+
+<script src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#customerDetails").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+
+    });
+
+</script>
+<style>
+    .tr, th {
+        background-color: darkkhaki;
+        text-align: center;
+    }
+</style>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PassBook Transaction Details</title>
+</head>
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    <p style="margin-left:1100px"> <b>Logged in at @Session["SessionID"]</b></p>
+
+    <hr />
+    <h3 style="color:purple;text-align:center">Accounts List</h3>
+
+    <hr />
+    <div style="margin-left:200px;margin-right:200px;margin-bottom:50px">
+        <table class="table table-bordered" id="customerDetails" style="border:groove; border-color:#fbdb29">
+            <tr>
+                <th style="background-color:#f8d00e">
+                    Serial
+                </th>
+                <th style="background-color:#f8d00e">
+                    Transaction Id
+                </th>
+                <th style="background-color:#f8d00e">
+                    Transaction Amount
+                </th>
+                <th style="background-color:#f8d00e">
+                    Transaction Type
+                </th>
+                <th style="background-color:#f8d00e">
+                    Date and Time
+                </th>
+
+            </tr>
+            @{int i = 1;}
+            @foreach (var item in Model)
+            {
+                if (item.TxnType == "Debited")
+                {
+                    <tr bgcolor="#f1efef">
+                        <td style="text-align:center">
+                            <span>@(i++)</span>
+
+                        </td>
+
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.TxnId)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+
+                        <td style="text-align:center;color:#980c0c">
+                            @Html.DisplayFor(modelItem => item.TxnType)
+                        </td>
+
+                        @*<td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.TxnType)
+                            </td>*@
+
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.DateAndTime)
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+
+                    <tr bgcolor="#f1efef">
+                        <td style="text-align:center">
+                            <span>@(i++)</span>
+
+                        </td>
+
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.TxnId)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+
+                        <td style="text-align:center;color:#2ccf34">
+                            @Html.DisplayFor(modelItem => item.TxnType)
+                        </td>
+
+                        @*<td style="text-align:center">
+                                @Html.DisplayFor(modelItem => item.TxnType)
+                            </td>*@
+
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.DateAndTime)
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        </table>
+</body>
+</html>

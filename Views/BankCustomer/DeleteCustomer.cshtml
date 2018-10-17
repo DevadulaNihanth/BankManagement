@@ -1,0 +1,187 @@
+﻿@model RoyalBank.Models.usp_view_by_customerid_Result
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_AccountExecutive.cshtml";
+}
+<style>
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #08e249;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
+
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+
+    @if (Convert.ToInt32(Session["role_id"]) == 1)
+    {
+        <b style="margin-left:1000px"> You have logged in at @Session["SessionID"]</b>
+        <text>
+            @*<h2>Login Successful!!!</h2>*@
+            <br />
+            @*<b>Welcome @Session["UserName"].ToString()</b>*@
+
+        </text>
+
+    }
+    <hr />
+
+    <h3 style="text-align:center;color:purple">Delete Customer</h3>
+    <hr />
+
+    <div class="form-horizontal" style="border: medium solid purple;width:940px;height:auto;margin-left:200px;margin-top:50px;padding-top:50px;margin-bottom:50px">
+
+
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label("SSNID", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.SSNID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label("Date of Birth", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label(" Address Line 1", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label(" Address Line 2", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label("City", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label(" State", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+
+        <div class="form-group" style="width:500px;margin-left:200px">
+            @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-5" style="width:300px">
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+            </div>
+        </div>
+
+
+
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group" style="width:500px;margin-left:285px">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Delete" style="width:128px" class="btn btn-danger" />
+                    <button type="button" onclick="location.href='@Url.Action("CustomerList", "BankCustomer")'" class="btn btn-warning" style="width:128px; margin-left:15px">Back</button>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#dialog").dialog(
+                {
+                    close: function (event, ui) { window.location.href = "/BankCustomer/CustomerList"; }
+                });
+        });
+    </script>
+
+
+
+    @if (TempData["notice"] != null)
+    {
+        <text>
+
+            <div id="dialog" title=" Message">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wv7o6KlwlAsQq_e-Fyi0C5JcOSlRYniEYWTEy9lLEnA1u-Yi" style="margin-left:80px; width:100px;height:100px">
+                <p style="text-align:center; color:red">@TempData["notice"]</p>
+            </div>
+        </text>
+    }
+</body>

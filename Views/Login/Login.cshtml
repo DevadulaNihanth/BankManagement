@@ -1,0 +1,127 @@
+﻿@model RoyalBank.Models.login_master
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+    </script>
+</head>
+<body onload="noBack();"
+      onpageshow="if (event.persisted) noBack();" onunload="">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Text" rel="stylesheet">
+    <style>
+        /*//color color-profile body*/
+        body {
+            background: #fbf2ae;
+            background-image: url('http://finserv.in/v2/images/img14.jpg');
+        }
+
+        .container {
+            margin-bottom: 0px;
+        }
+
+        .form_bg {
+            background-color: #eee;
+            color: #666;
+            padding: 20px;
+            border-radius: 10px;
+            position: absolute;
+            border: 1px solid #fff;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 500px;
+            height: 320px;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .heading {
+            text-align: center;
+            align-content: center;
+            font-family: 'Libre Barcode 39 Text', cursive;
+            color: darkorange;
+        }
+    </style>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(function () {
+            $("#dialog").dialog(
+                {
+                    close: function (event, ui) { window.location.href = "/Login/Login"; }
+                });
+        });
+    </script>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container">
+
+            <div class="row">
+
+
+
+                <div class="form_bg">
+
+                    <form>
+                        <h2 class="text-center">LOGIN PANEL</h2>
+
+                        <br />
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Enter User Name" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @type = "password", @class = "form-control", @placeholder = "Enter your Password" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <br />
+                        <div class="align-center">
+                            <button type="submit" class="btn btn-info" id="login" style="width:250px">Login</button>
+
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    @if (TempData["notice"] != null)
+    {
+        <text>
+
+            <div id="dialog" title="Error Message">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBkzE9tYSc4xXhiu2fOJ11p7EzG-nissEMufIrP5DWVSEP4Z0L" style="margin-left:80px; width:100px;height:100px">
+                <p style="text-align:center; color:red">Invalid Username or Password!!!</p>
+            </div>
+        </text>
+    }
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+</body>
+</html>

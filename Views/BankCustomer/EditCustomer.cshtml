@@ -1,0 +1,247 @@
+﻿@model RoyalBank.Models.usp_view_by_customerid_Result
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_AccountExecutive.cshtml";
+}
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+
+<script type="text/javascript">
+
+
+
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "/BankCustomer/GetStates",
+            datatype: "Json",
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#dropdownState').append('<option value="' + value.state_id + '">' + value.state_name + '</option>');
+                });
+            }
+        });
+
+        $('#dropdownState').change(function () {
+
+            $('#dropdownCity').empty();
+
+            $.ajax({
+                type: "POST",
+                url: "/BankCustomer/GetCitiesByStateId",
+                datatype: "Json",
+                data: { state_id: $('#dropdownState').val() },
+                success: function (data) {
+                    $.each(data, function (index, value) {
+                        $('#dropdownCity').append('<option value="' + value.city_id + '">' + value.city_name + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<style type="text/css">
+    .ui-datepicker {
+        background: #333;
+        border: 1px solid #555;
+        color: #EEE;
+    }
+</style>
+<style>
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            .dropdown-content a:hover {
+                background-color: #08e249;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+
+    .required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#datepicker').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1899:1999'
+        }
+            );
+    });
+</script>
+
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        <p style="margin-left:1100px"> <b>Logged in at @Session["SessionID"]</b></p>
+        <h3 style="color:purple;text-align:center">Edit Customer Panel</h3>
+
+
+        <hr />
+        <div class="form-horizontal" style="border: medium solid purple;width:940px;height:auto;margin-left:200px;margin-top:50px;padding-top:50px; margin-bottom:50px">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CustomerId)
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.SSNID, htmlAttributes: new { @class = "control-label col-md-4  required" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.SSNID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SSNID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-5" style="width:300px">
+                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-5" style="width:300px">
+                    @*@Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @*@Html.EditorFor(model => model.DOB, new { @id = "datepicker", @class = "form-control" })*@
+                    @Html.TextBoxFor(model => model.DOB, new { @id = "datepicker", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-5" style="width:300px">
+                    @*@Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.TextAreaFor(model => model.Address1, 3, 35, null)
+                    @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-5" style="width:300px">
+                    @*@Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.TextAreaFor(model => model.Address2, 2, 35, null)
+                    @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-5" style="width:300px">
+                    @*@Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.DropDownList("dropdownState", new SelectList(string.Empty, "Value", "Text"), "----  Select State  ----", new { @class = "btn btn-default dropdown-toggle", @data_val = "true", @data_val_required = "Mandatory Field", style = "width: 270px" })
+                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:500px;margin-left:200px;">
+                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-4 required" })
+                <div class="col-md-2" style="width:300px">
+                    @*@Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.DropDownList("dropdownCity", new SelectList(string.Empty, "Value", "Text"), "----  Select City  -----", new { @class = "btn btn-default dropdown-toggle", @data_val = "true", @data_val_required = "Mandatory Field", style = "width: 270px" })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-group" style="width:500px;margin-left:285px">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Update" class="btn btn-success" />
+                    <button type="button" onclick="location.href='@Url.Action("CustomerList", "BankCustomer")'" class="btn btn-warning" style="width:132px; margin-left:15px">Back</button>
+                </div>
+            </div>
+            <div style="color:red;margin-left:630px">
+                Note:Asterisk(*) fields are mandatory
+            </div>
+        </div>
+    }
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#dialog").dialog(
+                {
+                    close: function (event, ui) { window.location.href = "/BankCustomer/CustomerList"; }
+                });
+        });
+    </script>
+    @if (TempData["notice"] != null)
+    {
+        <text>
+
+            <div id="dialog" title=" Message">
+                <img src="http://www.vph-institute.org/upload/improve-h2020-success-rate_5593b36edb00c.jpg" style="margin-left:80px; width:100px;height:100px">
+                <p style="text-align:center; color:red">@TempData["notice"]</p>
+            </div>
+        </text>
+    }
+</body>

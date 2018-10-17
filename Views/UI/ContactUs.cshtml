@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ContactUS</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+    <div>
+        <div class="container-fluid bg-grey" style="margin">
+            <br />
+            <h2 class="text-center" style="background-color:#f6e1d1; color:#c14343"><b>CONTACT US</b></h2>
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <h4 class="text-center" style="color:#c14343"><i>Contact Us And We'll Get Back To You Within A Working Day!</i></h4>
+                    <br />
+                    <br />
+
+                    <p><span class="glyphicon glyphicon-map-marker"></span> Royal Bank Towers, Dollars Complex, Mumbai, 400 051, India.</p>
+                    <p><span class="glyphicon glyphicon-phone"></span> +91-22-33445566</p>
+                    <p><span class="glyphicon glyphicon-envelope"></span> mailto@royalbank.com</p>
+                    <br />
+                   
+
+                </div>
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+                        </div>
+                    </div>
+                    <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+                    <div class="row">
+                        <div class="col-sm-12 form-group">
+                            <button id="btnContactUs" class="btn btn-default pull-right" type="submit">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br /><br />
+
+        <!--Add Google Maps-->
+        <div class="col-lg-6 col-sm-offset-3" >
+            <p><span class="glyphicon glyphicon-map-marker"> </span>  LOCATION </p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30166.160836904426!2d72.86830104017727!3d19.073842852396986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C+Maharashtra!5e0!3m2!1sen!2sin!4v1505282605171" width="650" height="450" frameborder="1" style="border:ridge" allowfullscreen></iframe>
+        </div>
+    
+
+    <br />
+    <br />
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "ImageGallery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+
+    <h2 class="w3-center">Photo Gallery</h2>
+
+    <div class="w3-content w3-display-container">
+        <h3 style="text-align:center">Mobile Banking facility</h3>
+        <img class="mySlides" src="http://imtelco.com/wp-content/uploads/2015/12/mobile-banking-small.png" style="width:100%;height:300px">
+        <h3 style="text-align:center">We take care of your valuable money</h3>
+        <img class="mySlides" src="https://www.umassmed.edu/globalassets/human-resources/documents/immigration/images/bank-logo.jpg" style="width:100%;height:300px">
+        <h3 style="text-align:center">Conducting events to create awareness among people</h3>
+        <img class="mySlides" src="http://rampages.us/aspiretoaspire/wp-content/uploads/sites/4240/2014/12/awareness21.jpg" style="width:100%;height:300px">
+        <h3 style="text-align:center">Participating in events to lend a helping hand for charity</h3>
+        <img class="mySlides" src="http://www.oclegal.ie/wp-content/uploads/2016/03/charity.jpg" style="width:100%;height:300px">
+        <h3 style="text-align:center">Get financial advices from our experts</h3>
+        <img class="mySlides" src="http://ernestan.com/wp-content/uploads/2016/04/Financial-Advisor-Banner.jpg" style="width:100%;height:300px">
+        <h3 style="text-align:center">Get 24X7 support</h3>
+        <img class="mySlides" src="https://img.etimg.com/thumb/msid-22427842,width-672,resizemode-4,imglength-23531/customer-care-service-expectations-are-very-low-in-india/customer-care-has-never-been-the-hallmark-of-india-inc-.jpg" style="width:100%;height:300px">
+
+        <div style="align-content:center">
+
+
+            <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+            <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+        </div>
+    </div>
+
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,169 @@
+﻿@model IEnumerable<RoyalBank.Models.usp_view_by_customerid_or_ssnid_Result>
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_AccountExecutive.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" />
+
+<!-- jQuery library -->
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+
+<!-- Latest compiled JavaScript -->
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
+
+
+<script src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#accountDetails").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+
+    });
+
+</script>
+<style>
+    .tr, th {
+        background-color:#ff7215;
+        text-align: center;
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>dis</title>
+</head>
+<body style="background-image:url('http://www.psdgraphics.com/file/light-blue-abstract.jpg'); width:auto;height:786px;">
+    <p style="margin-left:1100px"> <b>logged in at @Session["SessionID"]</b></p>
+    <hr />
+    <h2 style="text-align:center;color:purple">Search Details</h2>
+    <hr />
+    <div style="margin-left:80px;margin-right:80px;margin-bottom:50px">
+        <table class="table table-bordered" id="accountDetails" style="border:groove;border-color:#fbdb29">
+
+
+            <tr bgcolor="#f1efef">
+                <th style="background-color:#f8d00e">
+                    Serial
+                </th>
+                <th style="background-color:#f8d00e">
+                    Customer Id
+                </th>
+                <th style="background-color:#f8d00e">
+                    SSNID
+                </th>
+                <th style="background-color:#f8d00e">
+                    Customer Name
+                </th>
+                <th style="background-color:#f8d00e">
+                    Date of Birth
+                </th>
+                <th style="background-color:#f8d00e">
+                    Address 1
+                </th>
+                <th style="background-color:#f8d00e">
+                    Address 2
+                </th>
+                <th style="background-color:#f8d00e">
+                    City
+                </th>
+                <th style="background-color:#f8d00e">
+                    State
+                </th>
+                <th style="background-color:#f8d00e">
+                    Status
+                </th>
+
+            </tr>
+            @{int i = 1;}
+            @foreach (var item in Model)
+            {
+                if (item.Status == "Active")
+                {
+                    <tr bgcolor="#f1efef">
+                        <td style="text-align:center">
+                            <span>@(i++)</span>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SSNID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    <tr bgcolor="#f5cece">
+                        <td style="text-align:center">
+                            <span>@(i++)</span>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SSNID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        </table>
+    </div>
+    <br />
+
+
+
+</body>
+</html>

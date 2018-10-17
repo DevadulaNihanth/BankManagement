@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0a16fa9078fd410baf90ec9786690f02" Name="Diagram1">
+        <EntityTypeShape EntityType="RoyalBankModel.login_master" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalBankModel.role_master" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalBankModel.account_details" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RoyalBankModel.customer_details" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="RoyalBankModel.customer_log" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="RoyalBankModel.transaction_details" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RoyalBankModel.transactiondetails" Width="1.5" PointX="7.75" PointY="0.75" />
+        <AssociationConnector Association="RoyalBankModel.FK_cid" />
+        <EntityTypeShape EntityType="RoyalBankModel.city_dropdown" Width="1.5" PointX="3" PointY="7.875" />
+        <EntityTypeShape EntityType="RoyalBankModel.state_dropdown" Width="1.5" PointX="0.75" PointY="7.875" />
+        <AssociationConnector Association="RoyalBankModel.FK__city_drop__state__4D94879B" />
+        <EntityTypeShape EntityType="RoyalBankModel.destination_table" Width="1.5" PointX="7.625" PointY="7.875" />
+        <EntityTypeShape EntityType="RoyalBankModel.source_table" Width="1.5" PointX="5.375" PointY="7.875" />
+        <AssociationConnector Association="RoyalBankModel.FK__destinati__sourc__73BA3083" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
